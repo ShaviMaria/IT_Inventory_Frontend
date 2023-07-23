@@ -1,0 +1,79 @@
+.menu-item-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.menu-item-content-text {
+    font-size: 23px;
+}
+
+.menu-item-content-icon-container {
+    height: 90%;
+    /*width: 90%;*/
+    width: 50px;
+}
+
+.menu-item-content-level1 {
+    margin-left: 22%
+}
+
+.menu-item-content-level2 {
+    margin-left: 32%;
+}
+
+.menu-item-content-level3 {
+    margin-left: 41%;
+}
+
+/*Tablet*/
+
+@media (min-width: 720px) {
+    .menu-item-content-level1 {
+        margin-left: 19%
+    }
+    
+    .menu-item-content-level2 {
+        margin-left: 30%;
+    }
+    
+    .menu-item-content-level3 {
+        margin-left: 41%;
+    }
+    .menu-item-content-closed h2 {
+        display: none;
+    }
+    .menu-item-content {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .menu-item-content-level1 {
+        margin-left: 10%
+    }
+    
+    .menu-item-content-level2 {
+        margin-left: 16%;
+    }
+    
+    .menu-item-content-level3 {
+        margin-left: 26%;
+    }
+    .menu-item-content-closed h2 {
+        display: none;
+    }
+    .menu-item-content {
+        display: flex;
+        justify-content: center;
+    } 
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

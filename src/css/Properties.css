@@ -1,0 +1,51 @@
+.properties-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    justify-self: center;
+    box-sizing: border-box;
+}
+
+.properties-search-box-content {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+    margin: 0 8px;
+}
+
+.properties-search-box {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+.properties-search-box button {
+    align-self: flex-end;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+    .properties-content {
+        width: 90%;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .properties-content {
+        width: 80%;
+    }
+    
+    .properties-search-box {
+        margin-right: 2%;
+    }
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

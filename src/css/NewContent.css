@@ -1,0 +1,30 @@
+.new-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.new-title-button-content {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.new-content-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.new-content-form-container input {
+    width: 90%;
+}
+
+.new-content-buttons-container {
+    display: flex;
+    gap: 30px;
+    align-self: flex-end;
+}

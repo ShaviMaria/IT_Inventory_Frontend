@@ -1,0 +1,11 @@
+.element-box {
+    padding: 25px 35px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+
+/*Tablet*/
+@media (min-width: 720px) {
+    .element-box {
+    }
+}

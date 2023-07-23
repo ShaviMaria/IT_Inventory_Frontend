@@ -1,0 +1,26 @@
+.input-text {
+    font-size: 15px;
+    padding: 5px;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+    .input-text {
+        font-size: 15px;
+        padding: 10px;
+        width: 250px;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

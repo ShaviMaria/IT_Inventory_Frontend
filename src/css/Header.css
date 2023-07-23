@@ -1,0 +1,192 @@
+.header {
+    height: 60px;
+    background-color: #557A95;
+    box-shadow: 1px 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+    max-width: 100%;
+    width: 90vw;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icons-header-container-logued {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    height: 95%;
+}
+
+.header-user-info-logued {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+.melia-hotels-international-logo-container {
+    height: 50%;
+    width: 50%;
+}
+
+.mit-logo-container-logued {
+    height: 100%;
+    width: 50%;
+}
+
+.mit-logo-container-unlogued {
+    height: 80%;
+    width: 20%;
+}
+
+.user-icon-header-container-logued {
+    height: 50%;
+    width: 70%;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.header-user-info-logued h3 {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 10px;
+}
+
+.userBox {
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .5rem;
+    border-radius: 1rem;
+    position: absolute;
+    right: 1%;
+    top: 2.6rem;
+    max-width: 6rem;
+}
+
+.userBox h2 {
+    color: #124065;
+}
+
+.userBox a {
+    text-decoration: underline;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.userBox button {
+    border-style: none;
+    font-size: 15px;
+    font-weight: 700;
+    background-color:darkgray;
+    padding: 3px;
+    border-radius: .2rem;
+    cursor: pointer
+}
+
+.userBox button:hover {
+    background-color:rgb(152, 152, 152); 
+}
+
+.userBoxAux {
+    width: 100vw;
+    height: 100vh;
+    background-color: #FFF;
+}
+
+/* TABLET */
+
+@media (min-width: 720px) {
+    .melia-hotels-international-logo-container {
+        height: 30%;
+        width: 30%;
+    }
+    .header {
+        height: 80px;
+    }
+    .mit-logo-container-unlogued {
+        height: 70%;
+        width: 10%;
+    }
+    .icons-header-container-logued {
+        width: 20%;
+    }
+
+    .header-user-info-logued {
+        padding-top: 5px;
+        border-radius: 1rem;
+    }
+    
+    .header-user-info-logued:hover {
+        background-color: #26608f;
+    }
+
+    .userBox {
+        top: 3.2rem;
+        right: 2.2rem;
+    }
+}
+
+/* DESKTOP */
+
+@media (min-width: 1140px) {
+    /*
+    .melia-hotels-international-logo-container {
+        height: 28%;
+        width: 23%;
+    }*/
+    .melia-hotels-international-logo-container {
+        height: 30%;
+        width: 17%;
+    }
+
+    .mit-logo-container-unlogued {
+        height: 70%;
+        width: 5%;
+    }
+
+    .icons-header-container-logued {
+        width: 10%;
+    }
+
+    .userBox {
+        top: 3rem;
+        right: 3rem;
+        padding: 15px;
+    }
+}
+
+/* BIG DESKTOP */
+
+@media (min-width: 1920px) {
+    .melia-hotels-international-logo-container {
+        height: 35%;
+        width: 15%;
+    }
+
+    .mit-logo-container-unlogued {
+        height: 60%;
+        width: 3.5%;
+    }
+    .icons-header-container-logued {
+        width: 7%;
+    }
+
+    .userBox {
+        top: 3rem;
+        right: 4rem;
+        padding: 20px;
+    }
+}

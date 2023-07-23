@@ -1,0 +1,32 @@
+.notification-message {
+    padding: 10px 5px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+.notification-message p {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.notification-message-successful {
+    background-color: #00986C;
+}
+
+.notification-message-failed {
+    background-color: red;
+}
+
+.notification-message-message {
+    background-color: gray;
+}
+
+@media (min-width: 720px) {
+    .notification-message {
+        width: 15%;
+        border-radius: 5px;
+        width: 40%;
+    }
+}

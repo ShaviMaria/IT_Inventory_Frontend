@@ -1,0 +1,29 @@
+.delete-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.delete-title-button-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.delete-content-message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.delete-content-button-accept-container {
+    align-self: flex-end;
+}
+
+.delete-content-buttons-container {
+    display: flex;
+    gap: 30px;
+    align-self: flex-end;
+}

@@ -1,0 +1,11 @@
+.tertiary-button {
+    background-color: #FFF;
+    color: #000;
+    border: none;
+    font-size: 15px;
+    padding: 5px 8px;
+    box-shadow: 1px 4px 4px 0 rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #000;
+}

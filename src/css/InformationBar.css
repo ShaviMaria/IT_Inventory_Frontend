@@ -1,0 +1,29 @@
+.information-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.information-bar-labels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-self: center;
+}
+
+.information-bar-labels-container h2 {
+    font-size: 20px;
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .information-bar-labels-container h2 {
+        font-size: 30px;
+    }
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

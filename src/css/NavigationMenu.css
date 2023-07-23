@@ -1,0 +1,36 @@
+.navigation-menu {
+    box-shadow: 1px 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 720px) {
+    .navigation-menu {
+        align-self: flex-start;
+        width: 10%;
+    }
+
+    .navigation-menu-open {
+        width: 45%;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .navigation-menu {
+        width: 5%;
+    }
+    .navigation-menu-open {
+        width: 20%;
+    } 
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    .navigation-menu {
+        width: 3.5%;
+    }
+    .navigation-menu-open {
+        width: 14%;
+    } 
+}

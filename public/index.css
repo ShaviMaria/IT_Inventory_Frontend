@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 62.5%;
+    background-color: #F5F5F5;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#root {
+    max-width: 1920px;
+    margin: 0 auto;
+}

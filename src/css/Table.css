@@ -1,0 +1,129 @@
+.table-container {
+    width: 95%;
+    margin: 0 auto 10px auto;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.table {
+    max-width: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    position: sticky;
+    top: 0;
+    /*background-color: #f2f2f2;*/
+}
+
+.table thead th {
+    border-bottom: 4px solid #D9D9D9;
+    border-left: .5px solid #D9D9D9;
+    font-size: 15px;
+}
+
+.table thead th:first-of-type {
+    border-left: none;
+}
+
+.table thead th:last-of-type {
+    border-radius: 5px;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #D9D9D9;
+}
+  
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    font-size: 10px;
+    border-left: .5px solid #D9D9D9;
+}
+
+.table td:last-of-type {
+    border-left: none;
+}
+
+.table th {
+    /*background-color: #f2f2f2;*/
+}
+
+table tr .td-no-table{
+    border-left: none;
+}
+
+.table button {
+    z-index: 1;
+}
+
+.trow-table-button {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: #F5F5F5;
+}
+
+.table .td-table-button-container {
+    position: sticky;
+    right: 0;
+    padding: 0;
+}
+
+.td-table-button-container.td-table-button-container-first {
+    border-top: 4px solid #D9D9D9;
+}
+
+.table .td-table-button-container div {
+    display: flex;
+    justify-content: space-around;
+    vertical-align: middle;
+}
+
+.table .td-table-button-container button:active {
+    background-color: #8f8f8f;
+}
+
+.trow-table-button-edit {
+    border-left: 2px solid #D9D9D9;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+
+    .table-container {
+        width: 98%;
+        /*margin: 0 5px 10px 5px;*/
+    }
+
+    .table tr .td-no-table{
+        width: 40px;
+    }
+
+    .td-info-table {
+    }
+
+    .td-table-button-container {
+        width: 70px;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .table .td-table-button-container button:hover {
+        background-color: #b3b3b3;
+    }
+    .table .td-table-button-container button:active {
+        background-color: #8f8f8f;
+    }
+    .table tbody tr:hover {
+        background-color: #FFFFFF;
+    }
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

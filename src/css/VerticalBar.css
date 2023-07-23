@@ -1,0 +1,29 @@
+.vertical-bar {
+    width: 5px;
+    height: 82px;
+    background-color: #000;
+    border-radius: 5px;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .vertical-bar {
+        width: 5px;
+        height: 100px;
+        background-color: #000;
+        border-radius: 5px;
+    } 
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
+}

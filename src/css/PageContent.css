@@ -1,0 +1,44 @@
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    justify-self: center;
+    box-sizing: border-box;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+    .page-content {
+        width: 90%;
+    }
+
+    .page-content-menu-open {
+        width: 50%;
+    }
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+    .page-content {
+        width: 95%;
+    }
+
+    .page-content-menu-open {
+        width: 80%;
+    }
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    .page-content {
+        width: 96.5%;
+    }
+
+    .page-content-menu-open {
+        width: 86%;
+    } 
+}

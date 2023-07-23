@@ -1,0 +1,19 @@
+.component-button {
+    background-color: #379683;
+    color: #FFF;
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    box-shadow: 1px 4px 4px 0 rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.component-button:hover {
+    background-color: #308775;
+}
+
+.component-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
