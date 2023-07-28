@@ -15,8 +15,10 @@
 
 .update-content-form-container {
     display: flex;
+    overflow-y: auto;
     flex-direction: column;
     gap: 10px;
+    max-height: 70vh;
 }
 
 .update-content-form-container input {
@@ -27,4 +29,25 @@
     display: flex;
     gap: 30px;
     align-self: flex-end;
+}
+
+/* Tablet */
+
+@media (min-width: 720px) {
+    .update-content-form-container-big {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    } 
+}
+
+/* Desktop */
+
+@media (min-width: 1140px) {
+     
+}
+
+/* Big Desktop */
+
+@media (min-width: 1920px) {
+    
 }

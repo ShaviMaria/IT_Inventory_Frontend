@@ -559,8 +559,8 @@ const Properties = () => {
                     <UpdateContent
                         title={language.update_property}
                         fieldsContent={[
-                            {label: language.code, inputName: 'Property_Code', inputType: 'text', restriction: true, typeRestrictions: ['empty', 'onlyNumbers', 'unique']},
-                            {label: language.name, inputName: 'Name', inputType: 'text', restriction: true, typeRestrictions: ['empty']}
+                            {label: language.code, inputName: 'Property_Code', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['empty', 'onlyNumbers', 'unique']},
+                            {label: language.name, inputName: 'Name', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['empty']}
                         ]}
                         selectedRow={state.selectedRow}
                         listData={state.properties}

@@ -31,6 +31,7 @@ const Header = () => {
         cookies.remove('Language')
         window.location.href = '/'
     }
+
     return (
         <header className="header">
            <div className='header-container'>

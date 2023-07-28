@@ -31,6 +31,7 @@ const Networks = () => {
     const [ state, setState ] = useState({
         search: '',
         networks: null,
+        updateData: {},
         selectedRow: null,
         selectedNew: false,
         selectedDetails: false,
@@ -64,11 +65,7 @@ const Networks = () => {
     const getNetworksDHCPServers = useNetwork('getNetworksDHCPServers')
     const getRelations = useNetwork('getRelations')
     const getGateways = useNetwork('getGateways')
-    const getLastNetwork = useNetwork('getLastNetwork')
-    const getIpAddressByNetworkAndIp = useNetwork('getIpAddressByNetworkAndIp')
     const addNetwork = useNetwork('addNetwork')
-    const addIpAddress = useNetwork('addIpAddress')
-    const addBroadcast = useNetwork('addBroadcast')
     const updateNetwork = useNetwork('updateNetwork')
     const deleteNetwork = useNetwork('deleteNetwork')
 
@@ -145,6 +142,16 @@ const Networks = () => {
         }
     }
 
+    const handleUpdateChange = e => {
+        setState({
+            ...state,
+            ['updateData']: {
+                ...state.updateData,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
     useEffect(() => {
         if(!cookies.get('Windows_User')) {
             window.location.href = './'
@@ -171,8 +178,6 @@ const Networks = () => {
                 acc.push(network)
                 return acc
             }, [])
-
-            console.log(initialNetworks)
 
             if(initialNetworks.length > 0) {
                 initialNetworks.map(network => {
@@ -249,7 +254,7 @@ const Networks = () => {
             const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
-                    Property: `${elem.Property_Code} ${elem.Name}`
+                    Property: `${elem.Property_Code} - ${elem.Name}`
                 })
                 return acc
             }, [])
@@ -364,7 +369,7 @@ const Networks = () => {
             const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
-                    Property: `${elem.Property_Code} ${elem.Name}`
+                    Property: `${elem.Property_Code} - ${elem.Name}`
                 })
                 return acc
             }, [])
@@ -714,7 +719,7 @@ const Networks = () => {
                 const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
-                    Property: `${elem.Property_Code} ${elem.Name}`
+                    Property: `${elem.Property_Code} - ${elem.Name}`
                 })
                 return acc
                 }, [])
@@ -800,12 +805,37 @@ const Networks = () => {
 
     }, [state.addButtonPushed])
 
+    //useEffect used to change format of selectedNetwork
+    useEffect(() => {
+
+        if(state.selectedRow !== null) {
+            const selectedRowStr = JSON.stringify(state.selectedRow)
+            const updateData = JSON.parse(selectedRowStr)
+
+            state.properties.map(property => {
+                if(property.Property === updateData.Property) {
+                    updateData.Property = property.Id_Property
+                }
+            })
+
+            setState({
+                ...state,
+                ['updateData']: updateData
+            })
+        }
+
+    }, [state.selectedRow])
+
     const updatePropertyFunctionEvent = () => {
 
     }
 
     const exitUpdatePropertyForm = () => {
-
+        setState({
+            ...state,
+            ['selectedEdit']: false,
+            ['selectedRow']: null
+        })
     }
     
     const exitNewNetworkForm = () => {
@@ -888,18 +918,25 @@ const Networks = () => {
                 </InteractionBox>
                 : null
             }
-
             {state.selectedEdit
                 ? <InteractionBox>
                     <UpdateContent
                         title={language.update_network}
                         fieldsContent={[
-                            {label: language.code, inputName: 'Property_Code', restriction: true, typeRestrictions: ['empty', 'onlyNumbers', 'unique']},
-                            {label: language.name, inputName: 'Name', restriction: true, typeRestrictions: ['empty']}
+                            {label: language.property, inputName: 'Property', inputType: 'select', inputValues: state.properties, inputDisabled: false, restriction: true, typeRestrictions: ['empty', 'onlyNumbers']},
+                            {label: language.network_name, inputName: 'Network_Name', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['empty']},
+                            {label: language.subnet_mask, inputName: 'Subnet_Mask', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: 'CIDR', inputName: 'CIDR', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: language.network_address, inputName: 'Network_Address', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: 'Broadcast', inputName: 'Broadcast', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: language.host_amount, inputName: 'Host_Number', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: language.length, inputName: 'Length', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
+                            {label: language.gateway, inputName: 'Gateway', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['isIp'], ipObject: ip},
+                            {label: language.dhcp_server, inputName: 'DHCP_Server', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['isIp'], ipObject: ip},
                         ]}
-                        selectedRow={state.selectedRow}
+                        selectedRow={state.updateData}
                         listData={state.networks}
-                        handleChange={handleChange}
+                        handleChange={handleUpdateChange}
                         updateFunction={updatePropertyFunctionEvent}
                         exitFunction={exitUpdatePropertyForm}
                     />
@@ -968,7 +1005,6 @@ const Networks = () => {
                             </div>
                         </div>
                     </div>
-                    {console.log(state.networks)}
                     {state.networks === null
                     ? <Loading />
                     : 

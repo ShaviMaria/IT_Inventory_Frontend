@@ -18,6 +18,10 @@ const UpdateContent = ({ title, fieldsContent, selectedRow, listData, handleChan
     const restrictsStatus = []
     selectedRowKeys.shift()
 
+    const updateContentFormClass = fieldsContent.length > 4
+        ? 'update-content-form-container update-content-form-container-big'
+        : 'update-content-form-container'
+
     useEffect(() => {
         if(state.restrictsStatus.length > 0) {
             if(state.restrictsStatus.every(element => element === true)) {
@@ -47,7 +51,7 @@ const UpdateContent = ({ title, fieldsContent, selectedRow, listData, handleChan
                     exitFunction()
                 }}/>
             </div>
-            <div className='update-content-form-container'>
+            <div className={updateContentFormClass}>
 
                 {fieldsContent.map((field, index) => {
                     const restrictMessages = []
@@ -110,13 +114,13 @@ const UpdateContent = ({ title, fieldsContent, selectedRow, listData, handleChan
                     switch(field.inputType) {
                         case 'text':
                             input = <div>
-                                        <InputText name={field.inputName} type={field.inputType} value={selectedRow[selectedRowKeys[index]]} onChange={handleChange}/>
+                                        <InputText name={field.inputName} type={field.inputType} value={selectedRow[selectedRowKeys[index]]} onChange={handleChange} disabled={field.inputDisabled}/>
                                         {restrictMessages}
                                     </div>
                             break
                         case 'select':
                             input = <div>
-                                        <select name={field.inputName} value={selectedRow[selectedRowKeys[index]]} onChange={handleChange}>
+                                        <select name={field.inputName} value={selectedRow[selectedRowKeys[index]]} onChange={handleChange} disabled={field.inputDisabled}>
                                             <option value=''>{language.select}</option>
                                             {field.inputValues.map(e => {
                                                 const eKeys = Object.keys(e)
