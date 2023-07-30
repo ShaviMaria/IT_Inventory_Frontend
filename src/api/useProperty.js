@@ -14,6 +14,22 @@ const getProperties = async (address) => {
     }
 }
 
+const getPropertiesByList = async (address, properties) => {
+    let data
+    try {
+        const response = await fetch(`${address}/Properties/ByList/${properties}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        data = await response.json()
+        return data;
+    } catch(error){
+        console.error(error)
+    }
+}
+
 const getLastProperty = async (address) => {
     let data
     try {
@@ -103,6 +119,8 @@ const useProperty = (type) => {
     switch(type) {
         case 'getProperties':
             return getProperties
+        case 'getPropertiesByList':
+            return getPropertiesByList
         case 'getLastProperty':
             return getLastProperty
         case 'addProperty':

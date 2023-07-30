@@ -75,6 +75,11 @@ const Properties = () => {
         if(!cookies.get('Windows_User')) {
             window.location.href = './';
         }
+    
+        if(cookies.get('User_Type') !== 'Administrator') {
+            window.location.href = '/home';
+        }
+
         const fn = async () => {
             const data = await getProperties(address)
             setState({

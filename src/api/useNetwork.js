@@ -14,6 +14,22 @@ const getNetworks = async (address) => {
     }
 }
 
+const getNetworksByProperties = async (address, properties) => {
+    let data
+    try {
+        const response = await fetch(`${address}/Networks/ByProperties/${properties}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        data = await response.json()
+        return data;
+    } catch(error){
+        console.error(error)
+    } 
+}
+
 const getNetworksDHCPServers = async (address) => {
     let data
     try {
@@ -204,6 +220,8 @@ const useNetwork = (type) => {
     switch(type) {
         case 'getNetworks':
             return getNetworks
+        case 'getNetworksByProperties':
+            return getNetworksByProperties
         case 'getNetworksDHCPServers':
             return getNetworksDHCPServers
         case 'getNetworksDHCPServersById':

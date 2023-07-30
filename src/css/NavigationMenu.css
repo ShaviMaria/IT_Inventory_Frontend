@@ -6,6 +6,7 @@
     .navigation-menu {
         align-self: flex-start;
         width: 10%;
+        overflow-y: auto;
     }
 
     .navigation-menu-open {

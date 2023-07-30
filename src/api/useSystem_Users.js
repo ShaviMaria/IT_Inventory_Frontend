@@ -5,7 +5,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const useSystem_Users = ({ server, user, password, startingSesion }) => {
-    //console.log('RENDERING useSystem_Users');
     const [value, setValue] = useState({ server: server, user: user, password: password, startingSesion: startingSesion, userData: undefined });
 
     const handleValue = (property, v) => {
@@ -17,7 +16,6 @@ const useSystem_Users = ({ server, user, password, startingSesion }) => {
 
     const manageCredentials = async (credentials) => {
         const userData = await callSystem_Users(value.server, credentials.user, credentials.password); 
-        //console.log('USER DATA: ', userData) 
         setValue({
             ...value,
             ['user']: credentials.user,
@@ -25,7 +23,6 @@ const useSystem_Users = ({ server, user, password, startingSesion }) => {
             ['userData']: userData
         });
         
-        //console.log(userData);
         if(userData === undefined || userData.length === 0){
             setValue({
                 ...value,
@@ -49,6 +46,8 @@ const useSystem_Users = ({ server, user, password, startingSesion }) => {
             cookies.set('Id_User_System_User', userData[0].Id_User, {path: '/'});
             cookies.set('Id_System_User', userData[0].Id_System_User, {path: '/'});
             cookies.set('System_User_Password', userData[0].Password, {path: '/'});
+            cookies.set('Sections', JSON.stringify(userData[0].Sections), {path: '/'});
+            cookies.set('Properties', JSON.stringify(userData[0].Properties), {path: '/'});
             window.location.href='./Home';
         }
     }
@@ -59,13 +58,6 @@ const useSystem_Users = ({ server, user, password, startingSesion }) => {
 //OTHER FUNCTION
 const callSystem_Users = async (server, user, password, startingSesion) => {
     let userData = undefined;
-
-    //console.log('***********************************');
-    //console.log('DENTRO DE callSystem_Users');
-    //console.log(`SERVER: ${server}`);
-    //console.log(`USER: ${user}`);
-    //console.log(`PASSWORD: ${password}`);
-    //console.log(`STARTINGSESION: ${startingSesion}`);
 
     if(user.length != 0 && password.length != 0) {
         const md5Password = md5(password);
@@ -82,9 +74,6 @@ const callSystem_Users = async (server, user, password, startingSesion) => {
             console.error(error);
         }
     }
-
-    //console.log('SALIENDO DE callSystem_Users');
-    //console.log('***********************************');
 
     return userData;
 }

@@ -29,6 +29,7 @@ const Header = () => {
         cookies.remove('User_Type')
         cookies.remove('Windows_User')
         cookies.remove('Language')
+        cookies.remove('Sections')
         window.location.href = '/'
     }
 

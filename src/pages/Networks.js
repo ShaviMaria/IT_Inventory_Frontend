@@ -62,6 +62,7 @@ const Networks = () => {
     const currentDate = useDate('currentFullDate')
 
     const getNetworks = useNetwork('getNetworks')
+    const getNetworksByProperties = useNetwork('getNetworksByProperties')
     const getNetworksDHCPServers = useNetwork('getNetworksDHCPServers')
     const getRelations = useNetwork('getRelations')
     const getGateways = useNetwork('getGateways')
@@ -70,6 +71,7 @@ const Networks = () => {
     const deleteNetwork = useNetwork('deleteNetwork')
 
     const getProperties = useProperty('getProperties')
+    const getPropertiesByList = useProperty('getPropertiesByList')
 
     const addGenericEvent = useEvent('addGenericEvent')
 
@@ -158,7 +160,12 @@ const Networks = () => {
         }
 
         const getInitialData = async () => {
-            let initialNetworks = await getNetworks(address)
+            let initialNetworks
+            if(cookies.get('User_Type') !== 'Administrator') {
+                initialNetworks = await getNetworksByProperties(address, JSON.stringify(cookies.get('Properties')))
+            } else {    
+                initialNetworks = await getNetworks(address)
+            }
             const dhcpServers = await getNetworksDHCPServers(address)
             const gateways = await getGateways(address)
             const networks = []
@@ -250,7 +257,13 @@ const Networks = () => {
                 })
             }
 
-            const initialProperties = await getProperties(address)
+            let initialProperties
+            if(cookies.get('User_Type') !== 'Administrator') {
+                initialProperties = await getPropertiesByList(address, JSON.stringify(cookies.get('Properties')))
+            } else {
+                initialProperties = await getProperties(address)
+            }
+
             const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
@@ -258,7 +271,7 @@ const Networks = () => {
                 })
                 return acc
             }, [])
-
+            
             setState({
                 ...state,
                 ['networks']: networks,
@@ -273,7 +286,12 @@ const Networks = () => {
     useEffect(() => {
 
         const getData = async () => {
-            let initialNetworks = await getNetworks(address)
+            let initialNetworks
+            if(cookies.get('User_Type') !== 'Administrator') {
+                initialNetworks = await getNetworksByProperties(address, JSON.stringify(cookies.get('Properties')))
+            } else {
+                initialNetworks = await getNetworks(address)
+            }
             const dhcpServers = await getNetworksDHCPServers(address)
             const gateways = await getGateways(address)
             const networks = []
@@ -365,7 +383,14 @@ const Networks = () => {
                 })
             }
 
-            const initialProperties = await getProperties(address)
+            let initialProperties
+
+            if(cookies.get('User_Type') !== 'Administrator') {
+                initialProperties = await getPropertiesByList(address, JSON.stringify(cookies.get('Properties')))
+            } else {
+                initialProperties = await getProperties(address)
+            }
+
             const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
@@ -448,7 +473,13 @@ const Networks = () => {
                 case 'last':
                     const response = await deleteNetwork(address, { "id": state.selectedRow.Id_Network })
                     if(response.ok) {
-                        let initialNetworks = await getNetworks(address)
+                        let initialNetworks
+                        
+                        if(cookies.get('User_Type') !== 'Administrator') {
+                            initialNetworks = await getNetworksByProperties(address, JSON.stringify(cookies.get('Properties')))
+                        } else {
+                            initialNetworks = await getNetworks(address)
+                        }
                         const dhcpServers = await getNetworksDHCPServers(address)
                         const gateways = await getGateways(address)
                         const networks = []
@@ -618,11 +649,17 @@ const Networks = () => {
 
             //Get networklist again
             const getNetworkList = async () => {
-                let initialNetworks = await getNetworks(address)
+                let initialNetworks
+
+                if(cookies.get('User_Type') !== 'Administrator') {
+                    initialNetworks = await getNetworksByProperties(address, JSON.stringify(cookies.get('Properties')))
+                } else {
+                    initialNetworks = await getNetworks(address)
+                }
                 const dhcpServers = await getNetworksDHCPServers(address)
                 const gateways = await getGateways(address)
                 const networks = []
-
+                
                 initialNetworks = initialNetworks.reduce((acc, network) => {
                     const property = `${network.Property_Code} - ${network.Property_Name}`
     
@@ -711,11 +748,18 @@ const Networks = () => {
                 }
                 return networks
             }
+
             const networks = await getNetworkList(address)
 
             //Get Properties
             const getPropertiesList = async () => {
-                const initialProperties = await getProperties(address)
+                let initialProperties
+
+                if(cookies.get('User_Type') !== 'Administrator') {
+                    initialProperties = await getPropertiesByList(address, JSON.stringify(cookies.get('Properties')))
+                } else {
+                    initialProperties = await getProperties(address)
+                }
                 const properties = initialProperties.reduce((acc, elem) => {
                 acc.push({
                     Id_Property: elem.Id_Property,
@@ -998,7 +1042,11 @@ const Networks = () => {
                             : null
                         }
                         <div className='properties-search-box'>
-                            <TertiaryButton onClick={ () => setState({ ...state, ['selectedNew']: true })}>{language.new}</TertiaryButton>
+                            {cookies.get('User_Type') !== 'Viewer'
+                                ?
+                                    <TertiaryButton onClick={ () => setState({ ...state, ['selectedNew']: true })}>{language.new}</TertiaryButton>
+                                : null
+                            }
                             <div>
                                 <SubLabel>{language.search}</SubLabel> 
                                 <InputText name='search' type='text' value={state.search} onChange={handleChange}/>

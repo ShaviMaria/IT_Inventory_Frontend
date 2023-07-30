@@ -155,7 +155,14 @@ const NewContent = ({ title, fieldsContent, listData, value, handleChange, setVa
                 })}
             </div>
             <div className='new-content-buttons-container'>
-                <Button onClick={ () => setValue({...value, ['addButtonPushed']: !value.addButtonPushed}) } disabled={state.buttonDisabled}>{language.add}</Button>
+                <Button
+                    onClick={ () => {
+                        setValue({...value, ['addButtonPushed']: !value.addButtonPushed})
+                    }}
+                    disabled={state.buttonDisabled}
+                >
+                    {language.add}
+                </Button>
                 <SecondaryButton onClick={ () => exitFunction()}>{language.cancel}</SecondaryButton>
             </div>
 
