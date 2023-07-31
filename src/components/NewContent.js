@@ -11,7 +11,7 @@ import useLanguageContent from '../hooks/useLanguageContent'
 import '../css/NewContent.css'
 
 const NewContent = ({ title, fieldsContent, listData, value, handleChange, setValue, exitFunction }) => {
-    const [ state, setState ] = useState({ buttonDisabled: true, restrictsStatus: [] })
+    const [ state, setState ] = useState({ buttonDisabled: true, buttonAddPushed: false, restrictsStatus: [] })
     const cookies = new Cookies()
     const language = useLanguageContent(cookies.get('Language'))
     const restrictsStatus = []
@@ -50,6 +50,13 @@ const NewContent = ({ title, fieldsContent, listData, value, handleChange, setVa
                 })
             }
         } else {
+            setState({
+                ...state,
+                ['buttonDisabled']: true
+            })
+        }
+
+        if(state.buttonAddPushed) {
             setState({
                 ...state,
                 ['buttonDisabled']: true
@@ -157,7 +164,14 @@ const NewContent = ({ title, fieldsContent, listData, value, handleChange, setVa
             <div className='new-content-buttons-container'>
                 <Button
                     onClick={ () => {
-                        setValue({...value, ['addButtonPushed']: !value.addButtonPushed})
+                        setState({
+                            ...state,
+                            ['buttonAddPushed']: true
+                        })
+                        setValue({
+                            ...value,
+                            ['addButtonPushed']: !value.addButtonPushed
+                        })
                     }}
                     disabled={state.buttonDisabled}
                 >
