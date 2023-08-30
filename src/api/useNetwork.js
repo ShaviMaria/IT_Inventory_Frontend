@@ -94,6 +94,38 @@ const getGateways = async (address) => {
     }
 }
 
+const getGatewaysAddress = async (address) => {
+    let data
+    try {
+        const response = await fetch(`${address}/Networks/Gateways_Address`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        data = await response.json()
+        return data;
+    } catch(error){
+        console.error(error)
+    } 
+}
+
+const getGatewaysAddressByNetworkId = async (address, networkId) => {
+    let data
+    try {
+        const response = await fetch(`${address}/Networks/Gateways_Address/${networkId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        data = await response.json()
+        return data;
+    } catch(error){
+        console.error(error)
+    }
+}
+
 const getLastNetwork = async address => {
     let data
     try {
@@ -234,6 +266,10 @@ const useNetwork = (type) => {
             return deleteNetwork
         case 'getGateways':
             return getGateways
+        case 'getGatewaysAddress':
+            return getGatewaysAddress
+        case 'getGatewaysAddressByNetworkId':
+            return getGatewaysAddressByNetworkId
         case 'getLastNetwork':
             return getLastNetwork
         case 'addNetwork':

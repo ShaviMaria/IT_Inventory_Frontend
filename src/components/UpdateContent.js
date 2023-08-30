@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Autosuggest from 'react-autosuggest'
 import Cookies from 'universal-cookie'
 import SubTitle from './SubTitle'
 import XButton from './XButton'
@@ -117,6 +118,16 @@ const UpdateContent = ({ title, fieldsContent, selectedRow, listData, handleChan
                                         <InputText name={field.inputName} type={field.inputType} value={selectedRow[selectedRowKeys[index]]} onChange={handleChange} disabled={field.inputDisabled}/>
                                         {restrictMessages}
                                     </div>
+                            break
+                        case 'autosuggest':
+                            input = <Autosuggest
+                                        suggestions={field.suggestionElements.suggestionsList}
+                                        onSuggestionsFetchRequested={field.suggestionElements.onSuggestionsFetchRequested}
+                                        onSuggestionsClearRequested={field.suggestionElements.onSuggestionsClearRequested}
+                                        getSuggestionValue={field.suggestionElements.getSuggestionValue}
+                                        renderSuggestion={field.suggestionElements.renderSuggestion}
+                                        inputProps={field.suggestionElements.inputProps}
+                                    />
                             break
                         case 'select':
                             input = <div>

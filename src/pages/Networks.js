@@ -31,6 +31,7 @@ const Networks = () => {
     const [ state, setState ] = useState({
         search: '',
         networks: null,
+        gateways: null,
         updateData: {},
         selectedRow: null,
         selectedNew: false,
@@ -55,6 +56,12 @@ const Networks = () => {
         Network_Address: '',
         Subnet_Mask: '',
     })
+
+    //States to manage the Autosuggest Component for Gateway input in Update form
+    const [ inputGatewayValue, setInputGatewayValue ] = useState('')
+    const [ gatewaySuggestionList, setGatewaySuggestionList ] = useState([])
+    //************************************************************************ */
+
     const cookies = new Cookies()
     const language = useLanguageContent(cookies.get('Language'))
     const [ server, port ] = useServer()
@@ -66,6 +73,7 @@ const Networks = () => {
     const getNetworksDHCPServers = useNetwork('getNetworksDHCPServers')
     const getRelations = useNetwork('getRelations')
     const getGateways = useNetwork('getGateways')
+    const getGatewaysAddressByNetworkId = useNetwork('getGatewaysAddressByNetworkId')
     const addNetwork = useNetwork('addNetwork')
     const updateNetwork = useNetwork('updateNetwork')
     const deleteNetwork = useNetwork('deleteNetwork')
@@ -275,6 +283,7 @@ const Networks = () => {
             setState({
                 ...state,
                 ['networks']: networks,
+                ['gateways']: gateways,
                 ['properties']: properties
             })
         }
@@ -849,24 +858,38 @@ const Networks = () => {
 
     }, [state.addButtonPushed])
 
-    //useEffect used to change format of selectedNetwork
+    //useEffect used to change format of selectedNetwork and set updateData object values
     useEffect(() => {
 
-        if(state.selectedRow !== null) {
-            const selectedRowStr = JSON.stringify(state.selectedRow)
-            const updateData = JSON.parse(selectedRowStr)
+        const fn = async () => {
+            if(state.selectedRow !== null) {
+                const selectedRowStr = JSON.stringify(state.selectedRow)
+                const updateData = JSON.parse(selectedRowStr)
+                const networkGatewayList = await getGatewaysAddressByNetworkId(address, updateData.Id_Network)
 
-            state.properties.map(property => {
-                if(property.Property === updateData.Property) {
-                    updateData.Property = property.Id_Property
+                state.properties.map(property => {
+                    if(property.Property === updateData.Property) {
+                        updateData.Property = property.Id_Property
+                    }
+                })
+
+                if(updateData.Gateway === 'N/A') {
+                    updateData.Gateway = ''
                 }
-            })
 
-            setState({
-                ...state,
-                ['updateData']: updateData
-            })
+                if(updateData.DHCP_Server === 'N/A') {
+                    updateData.DHCP_Server = ''
+                }
+
+                setState({
+                    ...state,
+                    ['updateData']: updateData,
+                    ['gateways']: networkGatewayList
+                })
+            }
         }
+
+        fn()
 
     }, [state.selectedRow])
 
@@ -897,8 +920,46 @@ const Networks = () => {
         })
     }
 
+    const autosuggestGatewaysElements = {
+        inputValue: inputGatewayValue,
+        setInputValue: setInputGatewayValue,
+        suggestionsList: gatewaySuggestionList,
+        setSuggestionList: setGatewaySuggestionList,
+        //getSuggestions: (value) => {
+            //const inputValue = value.trim().toLowerCase();
+            //return state.gateways.filter(gateway => gateway.IP_Address.toLowerCase().includes(inputValue));
+        //},
+        getSuggestions: value => {
+            const inputValue = value.trim().toLowerCase();
+            const inputLength = inputValue.length;
+
+            return inputLength === 0 ? [] : state.gateways.filter(gateway =>
+            gateway.IP_Address.toLowerCase().slice(0, inputLength) === inputValue)
+        },
+        onSuggestionsFetchRequested: ({ value }) => {
+            const suggestions = autosuggestGatewaysElements.getSuggestions(value);
+            autosuggestGatewaysElements.setSuggestionList(suggestions);
+        },
+        onSuggestionsClearRequested: () => {
+            autosuggestGatewaysElements.setSuggestionList([])
+        },
+        getSuggestionValue: suggestion => suggestion.IP_Address,
+        renderSuggestion: suggestion => <div>{suggestion.IP_Address}</div>,
+        onChange: (event, { newValue }) => {
+            autosuggestGatewaysElements.setInputValue(newValue) 
+        },
+        inputProps: {
+            placeholder: 'Type a gateway address',
+            value: inputGatewayValue,
+            onChange: (event, { newValue }) => {
+                autosuggestGatewaysElements.onChange(event, { newValue });
+            }
+        }
+    }
+
     return (
         <div>
+            {console.log(autosuggestGatewaysElements.suggestionsList)}
             {state.addedSuccessfuly
                 ? <NotificationMessange type='successful'>{language.network_added_successfuly}</NotificationMessange>
                 : null
@@ -962,7 +1023,7 @@ const Networks = () => {
                 </InteractionBox>
                 : null
             }
-            {state.selectedEdit
+            {state.selectedEdit && state.gateways !== null
                 ? <InteractionBox>
                     <UpdateContent
                         title={language.update_network}
@@ -975,7 +1036,7 @@ const Networks = () => {
                             {label: 'Broadcast', inputName: 'Broadcast', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
                             {label: language.host_amount, inputName: 'Host_Number', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
                             {label: language.length, inputName: 'Length', inputType: 'text', inputDisabled: true, restriction: true, typeRestrictions: ['empty']},
-                            {label: language.gateway, inputName: 'Gateway', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['isIp'], ipObject: ip},
+                            {label: language.gateway, inputName: 'Gateway', inputType: 'autosuggest', suggestionElements: autosuggestGatewaysElements, restriction: true, typeRestrictions: ['isIp'], ipObject: ip},
                             {label: language.dhcp_server, inputName: 'DHCP_Server', inputType: 'text', inputDisabled: false, restriction: true, typeRestrictions: ['isIp'], ipObject: ip},
                         ]}
                         selectedRow={state.updateData}
